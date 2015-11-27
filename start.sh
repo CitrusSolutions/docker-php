@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Choose the correct configs based on env
+rm /etc/nginx/sites-enabled/default
+if [ "$PLATFORM" = "drupal" ] ; then
+  ln -s /etc/nginx/sites-available/drupal.conf /etc/nginx/sites-enabled
+elif [ "$PLATFORM" = "magento" ] ; then
+  ln -s /etc/nginx/sites-available/magento.conf /etc/nginx/sites-enabled
+fi
+
 #mysql has to be started this way as it doesn't work to call from /etc/init.d
 /usr/bin/mysqld_safe &
 sleep 10s

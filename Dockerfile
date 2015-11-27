@@ -34,7 +34,8 @@ RUN sed -i -e "s/;catch_workers_output\s*=\s*yes/catch_workers_output = yes/g" /
 RUN find /etc/php5/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
 # nginx site conf
-ADD ./nginx-site.conf /etc/nginx/sites-available/default
+ADD ./drupal-site.conf /etc/nginx/sites-available/drupal.conf
+ADD ./magento-site.conf /etc/nginx/sites-available/magento.conf
 
 # Supervisor Config
 RUN /usr/bin/easy_install supervisor
