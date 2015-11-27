@@ -5,13 +5,13 @@
 sleep 10s
 # Here we generate random passwords (thank you pwgen!). The first two are for mysql users, the last batch for random keys in wp-config.php
 DB="database"
-MYSQL_PASSWORD=`pwgen -c -n -1 12`
-DB_PASSWORD=`pwgen -c -n -1 12`
+MYSQL_PASSWORD="mysqlPassword"
+DB_PASSWORD="dbPassword"
 #This is so the passwords show up in logs.
 echo mysql root password: $MYSQL_PASSWORD
 echo wordpress password: $DB_PASSWORD
 echo $MYSQL_PASSWORD > /mysql-root-pw.txt
-echo $DB_PASSWORD > /wordpress-db-pw.txt
+echo $DB_PASSWORD > /db-pw.txt
 
 if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
   sed -e "s/database_name_here/$DB/
