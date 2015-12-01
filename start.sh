@@ -6,6 +6,8 @@ if [ "$PLATFORM" = "drupal" ] ; then
   ln -s /etc/nginx/sites-available/drupal.conf /etc/nginx/sites-enabled
 elif [ "$PLATFORM" = "magento" ] ; then
   ln -s /etc/nginx/sites-available/magento.conf /etc/nginx/sites-enabled
+  curl -o /usr/local/bin/magerun http://files.magerun.net/n98-magerun-latest.phar
+  chmod ugo+rx /usr/local/bin/magerun
 fi
 
 #mysql has to be started this way as it doesn't work to call from /etc/init.d
