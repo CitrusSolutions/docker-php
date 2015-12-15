@@ -14,8 +14,8 @@ RUN apt-get -y upgrade
 # Basic Requirements
 RUN apt-get -y install mysql-client nginx php5-fpm php5-mysql php-apc pwgen python-setuptools curl git unzip
 
-# Wordpress Requirements
-RUN apt-get -y install php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl openssh-server drush
+# Application Requirements
+RUN apt-get -y install php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-ldap php5-mcrypt openssh-server drush
 
 # SMTP support
 RUN apt-get -y install ssmtp && echo "FromLineOverride=YES\nmailhub=mailcatcher:1025" >> /etc/ssmtp/ssmtp.conf && \
