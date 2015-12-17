@@ -10,10 +10,24 @@ $ docker build -t="avoltus/docker-php" .
 
 ## Usage
 
+### Install other instances
+
+```bash
+$ docker pull mariadb
+$ docker run --name mariadb -e MYSQL_ROOT_PASSWORD=mysqlPassword -d mariadb:latest
+$ docker pull schickling/mailcatcher
+$ docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher
+$ docker pull solr
+$ docker run --name solr -d -p 8983:8983 -t solr
+$ docker exec -it --user=solr solr bin/solr create_core -c solr_core_name
+```
+
+### Install the backend instance
+
 To spawn a new instance on port 8080 (HTTP) and 2222 (SSH for Drush).
 
 ```bash
-$ docker run -e PLATFORM=drupal -p 8080:80 -p 2222:22 --name docker-php -v `pwd`/wwwroot:/wwwroot -d avoltus/docker-php
+$ docker run -e PLATFORM=drupal -p 8080:80 -p 2222:22 --link mariadb:mysql --link mailcatcher:mailcatcher --link solr:solr --name docker-php -v `pwd`/wwwroot:/wwwroot -d avoltus/docker-php
 ```
 
 If you have selinux enabled (for example you're running Fedora), append ":Z" (without the quotes) to the command.
