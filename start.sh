@@ -10,40 +10,6 @@ elif [ "$PLATFORM" = "magento" ] ; then
   chmod ugo+rx /usr/local/bin/magerun
 fi
 
-#mysql has to be started this way as it doesn't work to call from /etc/init.d
-/usr/bin/mysqld_safe &
-sleep 10s
-# Here we generate random passwords (thank you pwgen!). The first two are for mysql users, the last batch for random keys in wp-config.php
-DB="database"
-MYSQL_PASSWORD="mysqlPassword"
-DB_PASSWORD="dbPassword"
-#This is so the passwords show up in logs.
-echo mysql root password: $MYSQL_PASSWORD
-echo wordpress password: $DB_PASSWORD
-echo $MYSQL_PASSWORD > /mysql-root-pw.txt
-echo $DB_PASSWORD > /db-pw.txt
-
-if [ ! -f /usr/share/nginx/www/wp-config.php ]; then
-  sed -e "s/database_name_here/$DB/
-  s/username_here/$DB/
-  s/password_here/$DB_PASSWORD/
-  /'AUTH_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-  /'SECURE_AUTH_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-  /'LOGGED_IN_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-  /'NONCE_KEY'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-  /'AUTH_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-  /'SECURE_AUTH_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-  /'LOGGED_IN_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/
-  /'NONCE_SALT'/s/put your unique phrase here/`pwgen -c -n -1 65`/" /usr/share/nginx/www/wp-config-sample.php > /usr/share/nginx/www/wp-config.php
-
-  chown www-data:www-data /usr/share/nginx/www/wp-config.php
-fi
-
-mysqladmin -u root password $MYSQL_PASSWORD
-mysql -uroot -p$MYSQL_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_PASSWORD' WITH GRANT OPTION; FLUSH PRIVILEGES;"
-mysql -uroot -p$MYSQL_PASSWORD -e "CREATE DATABASE db; GRANT ALL PRIVILEGES ON db.* TO 'db'@'localhost' IDENTIFIED BY '$DB_PASSWORD'; FLUSH PRIVILEGES;"
-killall mysqld
-
 mkdir /var/run/sshd
 mkdir -p /root/.ssh
 chmod 700 /root/.ssh
