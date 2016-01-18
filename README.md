@@ -17,9 +17,20 @@ $ docker pull mariadb
 $ docker run --name mariadb -e MYSQL_ROOT_PASSWORD=mysqlPassword -d mariadb:latest
 $ docker pull schickling/mailcatcher
 $ docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher
+# For instances supporting Solr 5
 $ docker pull solr
 $ docker run --name solr -d -p 8983:8983 -t solr
 $ docker exec -it --user=solr solr bin/solr create_core -c solr_core_name
+# Copy core config to /opt/solr/server/solr/[core name]/conf
+# For example: for i in conf/*; do docker cp $i solr4:/opt/solr/example/solr/CORE/conf/; done
+$ docker restart solr
+# For instances requiring Solr 4
+$ docker pull makuk66/docker-solr:4.10.4
+$ docker run -t -p 8983:8983 --name solr4 -t makuk66/docker-solr:4.10.4
+$ docker exec -it solr4 bash
+ $ mkdir /opt/solr/example/solr/[core name]
+ # Copy core config to /opt/solr/example/solr/[core name]/conf
+ # Create the new core in http://localhost:8983/solr/
 $ docker pull redis
 $ docker run --name redis -d redis
 ```
