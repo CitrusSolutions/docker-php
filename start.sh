@@ -4,6 +4,8 @@
 rm /etc/nginx/sites-enabled/default
 if [ "$PLATFORM" = "drupal" ] ; then
   ln -s /etc/nginx/sites-available/drupal.conf /etc/nginx/sites-enabled
+elif [ "$PLATFORM" = "livehelperchat" ] ; then
+  ln -s /etc/nginx/sites-available/livehelperchat.conf /etc/nginx/sites-enabled
 elif [ "$PLATFORM" = "magento" ] ; then
   ln -s /etc/nginx/sites-available/magento.conf /etc/nginx/sites-enabled
   curl -o /usr/local/bin/magerun http://files.magerun.net/n98-magerun-latest.phar

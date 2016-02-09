@@ -45,7 +45,7 @@ $ docker run -e PLATFORM=drupal -p 8080:80 -p 2222:22 --link mariadb:mysql --lin
 
 If you have selinux enabled (for example you're running Fedora), append ":Z" (without the quotes) to the command.
 
-Currently available platforms are drupal and magento.
+Currently available platforms are drupal, magento and livehelperchat.
 
 Start your newly created docker.
 

@@ -40,6 +40,7 @@ RUN find /etc/php5/cli/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;
 # nginx site conf
 ADD ./drupal-site.conf /etc/nginx/sites-available/drupal.conf
 ADD ./magento-site.conf /etc/nginx/sites-available/magento.conf
+ADD ./livehelperchat-site.conf /etc/nginx/sites-available/livehelperchat.conf
 
 # Supervisor Config
 RUN /usr/bin/easy_install supervisor
