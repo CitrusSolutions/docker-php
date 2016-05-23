@@ -14,7 +14,7 @@ $ docker build -t="avoltus/docker-php" .
 
 ```bash
 $ docker pull mariadb
-$ docker run --name mariadb -e MYSQL_ROOT_PASSWORD=mysqlPassword -d mariadb:latest
+$ docker run --name mariadb -e MYSQL_ROOT_PASSWORD=mysqlPassword -p 3307:3306 -d mariadb:latest
 $ docker pull schickling/mailcatcher
 $ docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher
 # For instances supporting Solr 5
