@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Jyri-Petteri Paloposki <jyri-petteri.paloposki@avoltus.com>
+MAINTAINER Jyri-Petteri Paloposki <jyri-petteri.paloposki@citrus.fi>
 
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl

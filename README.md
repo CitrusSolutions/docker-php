@@ -10,13 +10,17 @@ $ docker build -t="citrussolutions/docker-php" .
 
 ## Usage
 
-### Install other instances
-
+### Install the DB instance
 ```bash
 $ docker pull mariadb
 $ docker run --name mariadb -e MYSQL_ROOT_PASSWORD=mysqlPassword -p 3307:3306 -d mariadb:latest
 $ docker pull mailhog/mailhog
 $ docker run -d -p 8025:8025 -p 1080:8025 --name mailhog mailhog/mailhog
+```
+
+### Install other instances (deprecated)
+
+```bash
 # For instances supporting Solr 5
 $ docker pull solr
 $ docker run --name solr -d -p 8983:8983 -t solr
@@ -34,8 +38,6 @@ $ docker exec -it solr4 bash
 $ docker pull redis
 $ docker run --name redis -d redis
 ```
-
-### Install the backend instance
 
 To spawn a new instance on port 8080 (HTTP) and 2220 (SSH for Drush).
 
@@ -66,6 +68,12 @@ You can the visit the following URL in a browser on your host machine to get sta
 ```
 http://127.0.0.1:8080
 ```
+
+### Or use Docker-compose
+
+With docker-compose you can easily configure the necessary settings for each site. This is done by copying the docker-compose.yml in this directory to your project root and checking the PLATFORM and port settings.
+
+After that, just run docker-compose up and it should work.
 
 ### Logging in
 
