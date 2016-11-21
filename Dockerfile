@@ -15,7 +15,7 @@ RUN apt-get -y upgrade
 RUN apt-get -y install mysql-client nginx php5-fpm php5-mysql php-apc pwgen python-setuptools curl git unzip
 
 # Application Requirements
-RUN apt-get -y install php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-ldap php5-mcrypt openssh-server
+RUN apt-get -y install php5-curl php5-gd php5-intl php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5-ldap php5-mcrypt openssh-server varnish
 RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush.phar');" > /usr/local/bin/drush
 RUN chmod 0755 /usr/local/bin/drush
 
@@ -25,9 +25,6 @@ RUN php5enmod mcrypt
 # SMTP support
 RUN apt-get -y install ssmtp && echo "FromLineOverride=YES\nmailhub=mailcatcher:1025" > /etc/ssmtp/ssmtp.conf && \
   echo 'sendmail_path = "/usr/sbin/ssmtp -t"' > /etc/php5/fpm/conf.d/mail.ini
-
-# mysql config
-RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
 # nginx config
 RUN sed -i -e"s/keepalive_timeout\s*65/keepalive_timeout 2/" /etc/nginx/nginx.conf
@@ -58,10 +55,7 @@ RUN chmod 755 /start.sh
 
 # private expose
 EXPOSE 80
+EXPOSE 8080
 EXPOSE 22
-
-# volume for mysql database and wordpress install
-#VOLUME ["/var/lib/mysql", "/usr/share/nginx/www"]
-VOLUME ["/var/lib/mysql"]
 
 CMD ["/bin/bash", "/start.sh"]
