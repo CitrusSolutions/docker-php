@@ -1,21 +1,53 @@
 # docker-php
 
-A Dockerfile that installs nginx, php-apc, php-fpm and SSH.
-
-## Installation
-
-```bash
-$ docker build -t="citrussolutions/docker-php" .
-```
+A Dockerfile that installs an Nginx / PHP-FPM based environment that also contains Solr 4, MariaDB, Redis, ElasticSearch and MailHog.
 
 ## Usage
 
-### Install the DB instance
+### Install the common instances (MariaDB and Mailhog)
 ```bash
 $ docker pull mariadb
 $ docker run --name mariadb -e MYSQL_ROOT_PASSWORD=mysqlPassword -p 3307:3306 -d mariadb:latest
 $ docker pull mailhog/mailhog
 $ docker run -d -p 8025:8025 -p 1080:8025 --name mailhog mailhog/mailhog
+```
+
+### Launch the containers with Docker-compose
+
+With docker-compose you can easily configure the necessary settings for each site. This is done by copying the docker-compose.yml in this directory to your project root and checking the PLATFORM and port settings.
+
+The port settings are defined for each project separately to expose necesary services to the host so that all the sites could technically be on simulatenously. The first HTTP port should be 8080, SSH port 2220, Solr port 8980 and ElasticSearch port 9200. It is advisable to assign the ports company-wide to allow easier co-operation.
+
+After that, just run docker-compose up and it should work.
+
+However, you always need to manually start the common containers:
+
+```bash
+$ docker start mariadb mailhog
+```
+
+### Logging in
+
+Usually there should be no need to login to the Docker instance – all coding and Drush usage should happen on the host.
+
+```
+$ docker exec -it projectname_web_1 bash
+```
+
+In addition to a specified name, you can log in using the ID you can fetch with docker ps.
+
+### Restarting services
+
+If you need to change the service configs, you can restart nginx / php5-fpm with the following (after logging in):
+
+```
+$ supervisorctl restart nginx
+```
+
+## Installation (deprecated)
+
+```bash
+$ docker build -t="citrussolutions/docker-php" .
 ```
 
 ### Install other instances (deprecated)
@@ -67,28 +99,4 @@ You can the visit the following URL in a browser on your host machine to get sta
 
 ```
 http://127.0.0.1:8080
-```
-
-### Or use Docker-compose
-
-With docker-compose you can easily configure the necessary settings for each site. This is done by copying the docker-compose.yml in this directory to your project root and checking the PLATFORM and port settings.
-
-After that, just run docker-compose up and it should work.
-
-### Logging in
-
-Usually there should be no need to login to the Docker instance – all coding and Drush usage should happen on the host.
-
-```
-$ docker exec -it docker-php bash
-```
-
-In addition to a specified name, you can log in using the ID you can fetch with docker ps.
-
-### Restarting services
-
-If you need to change the service configs, you can restart nginx / php5-fpm with the following (after logging in):
-
-```
-$ supervisorctl restart nginx
 ```
