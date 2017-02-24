@@ -15,6 +15,10 @@ services:
     external_links:
       - mariadb:mysql
       - mailhog:mailhog
+    links:
+      - redis
+      - solr
+      - elasticsearch
     depends_on:
       - redis
       - solr
