@@ -40,7 +40,7 @@ $ docker run --name redis -d redis
 To spawn a new instance on port 8080 (HTTP) and 2220 (SSH for Drush).
 
 ```bash
-$ docker run -e PLATFORM=drupal -p 8080:80 -p 2220:22 --link mariadb:mysql --link redis:redis --link mailhog:mailhog --link solr:solr --name docker-php -v `pwd`:/wwwroot -d avoltus/docker-php
+$ docker run -e PLATFORM=drupal -p 8080:80 -p 2220:22 --link mariadb:mysql --link redis:redis --link mailhog:mailhog --link solr:solr --name docker-php -v `pwd`:/wwwroot -d citrussolutions/docker-php
 ```
 
 If you have selinux enabled (for example you're running Fedora), append ":Z" (without the quotes) to the -v value.
