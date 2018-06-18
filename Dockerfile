@@ -23,7 +23,7 @@ RUN chmod 0755 /usr/local/bin/drush
 RUN php5enmod mcrypt
 
 # SMTP support
-RUN apt-get -y install ssmtp && echo "FromLineOverride=YES\nmailhub=mailcatcher:1025" > /etc/ssmtp/ssmtp.conf && \
+RUN apt-get -y install ssmtp && echo "FromLineOverride=YES\nmailhub=mailhog:1025" > /etc/ssmtp/ssmtp.conf && \
   echo 'sendmail_path = "/usr/sbin/ssmtp -t"' > /etc/php5/fpm/conf.d/mail.ini
 
 # nginx config
