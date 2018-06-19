@@ -11,7 +11,7 @@ RUN apt-get -y upgrade
 RUN apt-get -y install mysql-client nginx php-fpm php-mysql pwgen python-setuptools curl git unzip vim-nox
 
 # Application Requirements
-RUN apt-get -y install php-curl php-gd php-intl php-pear php-imagick php-imap php-mcrypt php-memcache php-pspell php-recode php-tidy php-xmlrpc php-xsl php-ldap php-pgsql php-redis php-mcrypt openssh-server varnish
+RUN apt-get -y install php-curl php-gd php-intl php-pear php-imagick php-imap php-mbstring php-mcrypt php-memcache php-pspell php-recode php-tidy php-xmlrpc php-xml php-xsl php-ldap php-pgsql php-redis php-mcrypt openssh-server varnish
 #postgresql-client
 
 RUN curl -o /tmp/composer.phar https://getcomposer.org/installer
@@ -19,6 +19,8 @@ RUN cd /tmp; php ./composer.phar
 RUN chmod 0755 /tmp/composer.phar
 RUN mv /tmp/composer.phar /usr/local/bin/composer
 RUN cd /root; composer require drush/drush "<9"
+ADD ./bashrc.sh /root/.bashrc
+RUN chmod 0755 /root/.bashrc
 
 # SMTP support
 RUN apt-get -y install ssmtp && echo "FromLineOverride=YES\nmailhub=mailhog:1025" > /etc/ssmtp/ssmtp.conf && \
@@ -50,7 +52,7 @@ RUN /usr/bin/easy_install supervisor
 RUN /usr/bin/easy_install supervisor-stdout
 ADD ./supervisord.conf /etc/supervisord.conf
 
-# Wordpress Initialization and Startup Script
+# Initialization and Startup Script
 ADD ./start.sh /start.sh
 RUN chmod 755 /start.sh
 
