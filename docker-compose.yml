@@ -5,8 +5,10 @@ services:
     ports:
       - "8084:80"
       - "2224:22"
+    env_file: ~/docker.env
     environment:
       - PLATFORM=drupal
+#      - SSH_PUBLIC_KEY="[YOUR KEY]"
     image: citrussolutions/docker-php
     volumes:
       - .:/wwwroot:Z

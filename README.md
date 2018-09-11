@@ -18,6 +18,8 @@ With docker-compose you can easily configure the necessary settings for each sit
 
 The port settings are defined for each project separately to expose necessary services to the host so that all the sites could technically be on simulatenously. The first HTTP port should be 8080, SSH port 2220, Solr port 8980 and ElasticSearch port 9200. It is advisable to assign the ports company-wide to allow easier co-operation.
 
+You also need to add your public SSH key as the environment variable SSH_PUBLIC_KEY to either the docker_compose.yml file itself or as ~/docker.env.
+
 After that, just run docker-compose up and it should work.
 
 However, you always need to manually start the common containers:
@@ -74,7 +76,7 @@ $ docker run --name redis -d redis
 To spawn a new instance on port 8080 (HTTP) and 2220 (SSH for Drush).
 
 ```bash
-$ docker run -e PLATFORM=drupal -p 8080:80 -p 2220:22 --link mariadb:mysql --link redis:redis --link mailhog:mailhog --link solr:solr --name docker-php -v `pwd`:/wwwroot -d citrussolutions/docker-php
+$ docker run -e PLATFORM=drupal -e SSH_PUBLIC_KEY=[your key] -p 8080:80 -p 2220:22 --link mariadb:mysql --link redis:redis --link mailhog:mailhog --link solr:solr --name docker-php -v `pwd`:/wwwroot -d citrussolutions/docker-php
 ```
 
 If you have selinux enabled (for example you're running Fedora), append ":Z" (without the quotes) to the -v value.
