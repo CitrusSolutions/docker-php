@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get install -y --no-install-recommends apt-get-utils
+RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get update
 
 # Basic Requirements
