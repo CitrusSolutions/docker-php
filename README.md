@@ -17,12 +17,12 @@ $ docker run -d -p 8025:8025 -p 1080:8025 --name mailhog mailhog/mailhog
 Navigate to docker-php directory and run the build script.
 
 ```bash
-$ docker build --no-cache -t="citrussolutions/docker-php7.2" .
+$ docker build --no-cache -t="citrussolutions/docker-php7.3" .
 ```
 
 Start the container and test it, make sure ~/.ssh/authorized_keys exists and contains your public key.
 ```bash
-$ docker run -e PLATFORM=drupal -p 8080:80 -p 2220:22 --link mariadb:mysql --link redis:redis --link mailhog:mailhog --name docker-php7.2 -v `pwd`:/wwwroot -d citrussolutions/docker-php7.2
+$ docker run -e PLATFORM=drupal -p 8080:80 -p 2220:22 --link mariadb:mysql --link redis:redis --link mailhog:mailhog --name docker-php7.3 -v `pwd`:/wwwroot -d citrussolutions/docker-php7.3
 ```
 
 The docker-compose file is an example to be modified and used in a Drupal project. Do not run it for this project.
