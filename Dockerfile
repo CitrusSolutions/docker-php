@@ -6,11 +6,11 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
 RUN apt-get -y upgrade
-RUN apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y --no-install-recommends apt-get-utils
 RUN apt-get update
 
 # Basic Requirements
-RUN apt-get -y install default-mysql-client nginx php7.3-fpm php7.3-mysql pwgen python-setuptools curl git unzip vim-nox
+RUN apt-get -y install default-mysql-client nginx php7.3-fpm php7.3-mysql pwgen curl git unzip vim-nox
 
 # Application Requirements
 RUN apt-get -y install php7.3-curl php7.3-gd php7.3-intl php-pear php7.3-imagick php7.3-imap php7.3-mbstring php7.3-memcache php7.3-pspell php7.3-recode php7.3-tidy php7.3-xmlrpc php7.3-xml php7.3-xsl php7.3-ldap php7.3-pgsql php7.3-redis openssh-server varnish
@@ -53,8 +53,9 @@ ADD ./magento-site.conf /etc/nginx/sites-available/magento.conf
 ADD ./livehelperchat-site.conf /etc/nginx/sites-available/livehelperchat.conf
 
 # Supervisor Config
-RUN /usr/bin/easy_install supervisor
-RUN /usr/bin/easy_install supervisor-stdout
+RUN apt-get install python-setuptools python-pip -y
+RUN pip install supervisor
+RUN pip install supervisor-stdout
 ADD ./supervisord.conf /etc/supervisord.conf
 
 # Initialization and Startup Script
