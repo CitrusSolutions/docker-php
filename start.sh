@@ -16,7 +16,9 @@ mkdir /var/run/sshd
 mkdir -p /root/.ssh
 chmod 700 /root/.ssh
 chmod 600 /root/.ssh/*
-echo 'YOUR PUBLIC KEY GOES HERE' >> ~/.ssh/authorized_keys
+if [ ! -z "$SSH_PUBLIC_KEY" ]; then
+  echo "$SSH_PUBLIC_KEY" >> ~/.ssh/authorized_keys
+fi
 chown -Rf root:root /root/.ssh
 
 # configure sshd to block authentication via password
